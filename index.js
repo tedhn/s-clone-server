@@ -28,6 +28,6 @@ app.post("/login", async (req, res) => {
 
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
 	console.log(`Example app listening on port ${PORT}`);
 });
