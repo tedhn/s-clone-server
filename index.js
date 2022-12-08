@@ -5,6 +5,7 @@ const SpotifyWebApi = require( "spotify-web-api-node" );
 
 const axios = require( "axios" );
 const bodyParser = require( "body-parser" );
+const { Console } = require( "console" );
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -36,12 +37,15 @@ app.post( "/login", async ( req, res ) => {
 		const data = await spotifyApi.authorizationCodeGrant( code );
 
 
+		console.log( code )
+
 		spotifyApi.setAccessToken( data.body[ "access_token" ] );
 		spotifyApi.setRefreshToken( data.body[ "refresh_token" ] );
 
-		console.log( data );
+		// console.log( data.body[ 'access_token' ] )
+		// localStorage.setItem( 'SPOTIFY_ACCESS_TOKEN', data.body[ "access_token" ] )
 
-		res.json( { statusCode: 202, text: "login success" } );
+		res.json( { statusCode: 200, access_token: data.body[ "access_token" ] } );
 	} catch ( e ) {
 		res.json( e )
 	}
@@ -61,6 +65,7 @@ app.get( "/me", async ( req, res ) => {
 	const data = await spotifyApi.getMe();
 	user = data.body;
 
+	console.log( user );
 	res.json( data.body );
 } );
 
@@ -105,7 +110,7 @@ app.post( "/search", async ( req, res ) => {
 	const { body } = await spotifyApi.search(
 		q,
 		[ "album", "artist", "playlist", "track", "show", "episode" ],
-		{ limit: 5 }
+		{ limit: 10 }
 	);
 
 	res.send( body );
@@ -155,6 +160,29 @@ app.post( "/addToPlaylist", async ( req, res ) => {
 		console.log( e );
 	}
 } );
+app.post( "/removeFromPlaylist", async ( req, res ) => {
+	const { playlistId, song } = req.body;
+
+	try {
+		spotifyApi.removeTracksFromPlaylist( playlistId, [ song ] );
+	} catch ( e ) {
+		console.log( e );
+	}
+} );
+app.post( "/createPlaylist", async ( req, res ) => {
+	const { playlistName, otherDetails } = req.body;
+
+	try {
+		const data = await spotifyApi.createPlaylist( playlistName, otherDetails );
+
+		res.send( data )
+	} catch ( e ) {
+		console.log( e );
+	}
+} );
+
+
+
 
 // SAVED TRACKS
 
