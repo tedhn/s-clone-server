@@ -45,7 +45,7 @@ app.post( "/login", async ( req, res ) => {
 		// console.log( data.body[ 'access_token' ] )
 		// localStorage.setItem( 'SPOTIFY_ACCESS_TOKEN', data.body[ "access_token" ] )
 
-		res.json( { statusCode: 200, access_token: data.body[ "access_token" ] } );
+		res.send( { statusCode: 200, access_token: data.body[ "access_token" ] } );
 	} catch ( e ) {
 		res.json( e )
 	}
