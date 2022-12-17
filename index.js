@@ -13,8 +13,9 @@ const PORT = process.env.PORT || 3001;
 const baseURL = "https://api.spotify.com/v1";
 
 app.use( cors( {
-	origin: '*',
-	methods: [ 'GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH' ]
+
+	origin: [ 'http://localhost:5173/' ],
+	credentials: true
 } ) );
 app.use( bodyParser() );
 
