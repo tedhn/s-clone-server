@@ -58,7 +58,7 @@ app.post( "/login", async ( req, res ) => {
 app.post( "/refreshSession", async ( req, res ) => {
 	try {
 		const data = await spotifyApi.refreshAccessToken();
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( data );
 	} catch ( e ) {
 		res.json( e );
@@ -98,7 +98,7 @@ app.post( "/getArtist", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.getArtist( artistId );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
 	} catch ( e ) {
 		console.log( e );
@@ -110,7 +110,7 @@ app.post( "/checkTracks", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.containsMySavedTracks( [ idList ] );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
 	} catch ( e ) {
 		console.log( e );
@@ -125,9 +125,9 @@ app.post( "/search", async ( req, res ) => {
 		const { body } = await spotifyApi.search(
 			q,
 			[ "album", "artist", "playlist", "track", "show", "episode" ],
-			{ limit: 5 }
+			{ limit: 10 }
 		);
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
 	}
 	catch ( e ) {
@@ -158,7 +158,7 @@ app.post( "/getPlaylistData", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.getPlaylist( playlistId );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
 
 	}
@@ -176,7 +176,7 @@ app.post( "/getPlaylistTracks", async ( req, res ) => {
 			offset: offset,
 			limit: 20,
 		} );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( { tracks: body.items } );
 
 	}
@@ -208,7 +208,7 @@ app.post( "/createPlaylist", async ( req, res ) => {
 
 	try {
 		const data = await spotifyApi.createPlaylist( playlistName, otherDetails );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( data )
 	} catch ( e ) {
 		console.log( e );
@@ -238,7 +238,7 @@ app.post( "/removeFromMySavedTracks", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.removeFromMySavedTracks( [ id ] );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
@@ -249,7 +249,7 @@ app.post( "/addToMySavedTracks", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.addToMySavedTracks( [ id ] );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
@@ -263,7 +263,7 @@ app.post( "/getAlbums", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.getAlbum( [ id ] );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
@@ -277,7 +277,7 @@ app.post( "/getAlbumsTracks", async ( req, res ) => {
 			limit: 20,
 			offset,
 		} );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
@@ -293,7 +293,7 @@ app.post( "/getArtistAlbums", async ( req, res ) => {
 		const { body } = await spotifyApi.getArtistAlbums( id, {
 			limit: 5,
 		} );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
@@ -304,7 +304,7 @@ app.post( "/getArtistTopTracks", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.getArtistTopTracks( id, market );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
@@ -315,7 +315,7 @@ app.post( "/getArtistRelatedArtists", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.getArtistRelatedArtists( id );
-
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( body );
 	} catch ( e ) {
 		console.log( e );
