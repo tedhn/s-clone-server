@@ -14,7 +14,7 @@ const baseURL = "https://api.spotify.com/v1";
 
 app.use( cors( {
 
-	origin: [ 'http://localhost:5173/' ],
+	origin: "*",
 	credentials: true
 } ) );
 app.use( bodyParser() );
@@ -48,6 +48,7 @@ app.post( "/login", async ( req, res ) => {
 
 		// console.log( data.body[ 'access_token' ] )
 		// localStorage.setItem( 'SPOTIFY_ACCESS_TOKEN', data.body[ "access_token" ] )
+		res.header( "Access-Control-Allow-Origin", "*" );
 
 		res.send( { statusCode: 200, access_token: data.body[ "access_token" ] } );
 	} catch ( e ) {
