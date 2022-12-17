@@ -20,7 +20,7 @@ app.use( cors( {
 app.use( bodyParser() );
 
 const crendential = {
-	redirectUri: "http://127.0.0.1:5173",
+	redirectUri: "http://localhost:5173/",
 	clientId: "fffed6f6f8e0455cb1d56dfeca1f47cd",
 	clientSecret: "6a8cec9a3f104cadbd66774d095aab02",
 };
@@ -225,7 +225,6 @@ app.post( "/savedTracks", async ( req, res ) => {
 
 	try {
 		const { body } = await spotifyApi.getMySavedTracks( { offset, limit: "20" } );
-
 
 		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
