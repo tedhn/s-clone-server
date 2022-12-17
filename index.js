@@ -20,7 +20,7 @@ app.use( cors( {
 app.use( bodyParser() );
 
 const crendential = {
-	redirectUri: "http://localhost:5173/",
+	redirectUri: [ "http://localhost:5173/", "https://symphonious-cocada-86f353.netlify.app" ],
 	clientId: "fffed6f6f8e0455cb1d56dfeca1f47cd",
 	clientSecret: "6a8cec9a3f104cadbd66774d095aab02",
 };
