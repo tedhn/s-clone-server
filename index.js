@@ -62,11 +62,18 @@ app.post( "/refreshSession", async ( req, res ) => {
 } );
 
 app.get( "/me", async ( req, res ) => {
-	const data = await spotifyApi.getMe();
-	user = data.body;
 
-	console.log( user );
-	res.json( data.body );
+	try {
+
+		const data = await spotifyApi.getMe();
+		user = data.body;
+
+		console.log( user );
+		res.json( data.body );
+	}
+	catch ( e ) {
+		console.log( e )
+	}
 } );
 
 app.post( "/getUser", async ( req, res ) => {
@@ -107,13 +114,21 @@ app.post( "/checkTracks", async ( req, res ) => {
 app.post( "/search", async ( req, res ) => {
 	const { q } = req.body;
 
-	const { body } = await spotifyApi.search(
-		q,
-		[ "album", "artist", "playlist", "track", "show", "episode" ],
-		{ limit: 10 }
-	);
 
-	res.send( body );
+	try {
+		const { body } = await spotifyApi.search(
+			q,
+			[ "album", "artist", "playlist", "track", "show", "episode" ],
+			{ limit: 5 }
+		);
+
+		res.send( body );
+
+	}
+	catch ( e ) {
+		console.log( e )
+	}
+
 } );
 
 // PLAYLIST API
@@ -133,22 +148,34 @@ app.get( "/playlist", async ( req, res ) => {
 app.post( "/getPlaylistData", async ( req, res ) => {
 	const { playlistId } = req.body;
 
-	const { body } = await spotifyApi.getPlaylist( playlistId );
 
-	res.send( body );
+	try {
+		const { body } = await spotifyApi.getPlaylist( playlistId );
+
+		res.send( body );
+
+	}
+	catch ( e ) {
+		console.log( e )
+	}
 } );
 
 app.post( "/getPlaylistTracks", async ( req, res ) => {
 	const { playlistId, offset } = req.body;
 
-	console.log( req.body )
+	try {
+		console.log( req.body )
+		const { body } = await spotifyApi.getPlaylistTracks( playlistId, {
+			offset: offset,
+			limit: 20,
+		} );
 
-	const { body } = await spotifyApi.getPlaylistTracks( playlistId, {
-		offset: offset,
-		limit: 20,
-	} );
+		res.send( { tracks: body.items } );
 
-	res.send( { tracks: body.items } );
+	}
+	catch ( e ) {
+		console.log( e )
+	}
 } );
 
 app.post( "/addToPlaylist", async ( req, res ) => {
