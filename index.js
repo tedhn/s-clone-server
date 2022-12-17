@@ -49,7 +49,6 @@ app.post( "/login", async ( req, res ) => {
 		// console.log( data.body[ 'access_token' ] )
 		// localStorage.setItem( 'SPOTIFY_ACCESS_TOKEN', data.body[ "access_token" ] )
 		res.header( "Access-Control-Allow-Origin", "*" );
-
 		res.send( { statusCode: 200, access_token: data.body[ "access_token" ] } );
 	} catch ( e ) {
 		res.json( e )
@@ -74,6 +73,7 @@ app.get( "/me", async ( req, res ) => {
 		user = data.body;
 
 		console.log( user );
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.json( data.body );
 	}
 	catch ( e ) {
@@ -87,6 +87,7 @@ app.post( "/getUser", async ( req, res ) => {
 	try {
 		const { body } = await spotifyApi.getUser( userId );
 
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
 	} catch ( e ) {
 		console.log( e );
@@ -140,6 +141,8 @@ app.post( "/search", async ( req, res ) => {
 app.get( "/playlist", async ( req, res ) => {
 	try {
 		spotifyApi.getUserPlaylists( user.id ).then( ( data ) => {
+
+			res.header( "Access-Control-Allow-Origin", "*" );
 			res.send( data.body );
 		} );
 	} catch ( e ) {
@@ -223,6 +226,8 @@ app.post( "/savedTracks", async ( req, res ) => {
 	try {
 		const { body } = await spotifyApi.getMySavedTracks( { offset, limit: "20" } );
 
+
+		res.header( "Access-Control-Allow-Origin", "*" );
 		res.send( body );
 	} catch ( e ) {
 		console.log( e );
