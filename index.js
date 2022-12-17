@@ -12,7 +12,10 @@ const PORT = process.env.PORT || 3001;
 
 const baseURL = "https://api.spotify.com/v1";
 
-app.use( cors() );
+app.use( cors( {
+	origin: '*',
+	methods: [ 'GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH' ]
+} ) );
 app.use( bodyParser() );
 
 const crendential = {
